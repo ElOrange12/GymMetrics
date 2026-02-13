@@ -1,0 +1,141 @@
+/* Configuración básica */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    /* Fondo con degradado azul metálico oscuro */
+    background: radial-gradient(circle at center, #2c3e50 0%, #000000 100%);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+.login-box {
+    background: linear-gradient(145deg, #232d39, #1a2229); /* Gris metálico */
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    border: 1px solid #34495e; /* Borde sutil azulado */
+    text-align: center;
+}
+
+/* Logo */
+.logo-space {
+    margin-bottom: 20px;
+}
+
+.logo {
+    width: 80px; /* Ajusta según tu imagen */
+    filter: drop-shadow(0 0 10px rgba(255, 107, 0, 0.3)); /* Brillo sutil */
+}
+
+h2 {
+    color: #ecf0f1;
+    font-size: 24px;
+    margin-bottom: 5px;
+    letter-spacing: 1px;
+}
+
+.subtitle {
+    color: #95a5a6;
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+/* Inputs */
+.input-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    color: #bdc3c7;
+    font-size: 12px;
+    margin-bottom: 8px;
+    margin-left: 5px;
+    text-transform: uppercase;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 15px;
+    background: #2c3e50;
+    border: 1px solid #455a64;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #3498db; /* Azul brillante al pulsar */
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+}
+
+/* Botón Metálico */
+.btn-login {
+    width: 100%;
+    padding: 15px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 8px;
+    /* Degradado azul metálico fuerte */
+    background: linear-gradient(to bottom, #3498db, #2980b9);
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-login:hover {
+    background: linear-gradient(to bottom, #5dade2, #3498db);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+}
+
+/* Footer del form */
+.form-footer {
+    margin-top: 25px;
+}
+
+.form-footer a {
+    color: #7f8c8d;
+    font-size: 13px;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.form-footer a:hover {
+    color: #3498db;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #34495e;
+    margin: 20px 0;
+}
+
+.form-footer p {
+    color: #bdc3c7;
+    font-size: 14px;
+}
+
+.highlight {
+    color: #3498db !important;
+    font-weight: bold;
+}

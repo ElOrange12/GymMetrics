@@ -19,7 +19,12 @@
 
 		        <form>
 		            <div class="input-group">
-		                <label for="usuario">Usuario o Email</label>
+		                <label for="usuario">Usuario</label>
+		                <input type="text" id="usuario" required>
+		            </div>
+		            
+		            <div class="input-group">
+		                <label for="usuario">Email</label>
 		                <input type="text" id="usuario" required>
 		            </div>
 
@@ -33,7 +38,7 @@
 		            <div class="form-footer">
 		                <a href="#">¿Olvidaste tu contraseña?</a>
 		                <hr>
-		                <p>¿No tienes cuenta? <a href="registro.php" class="highlight">Regístrate aquí</a></p>
+		                <p>¿Tienes cuenta? <a href="index.php" class="highlight">Inicia sesión aquí</a></p>
 		            </div>
 		        </form>
 		    </div>
