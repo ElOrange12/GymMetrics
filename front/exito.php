@@ -24,7 +24,7 @@
 			
 			<header class="dashboard-header">
 				<h2>Bienvenido, <span class="text-blue">Daniel</span></h2>
-				<p class="subtitle">Tu progreso de un vistazo</p>
+				<p class="subtitle">¡¡Echa un vistazo a tu progreso!!</p>
 			</header>
 
 			<div class="card week-card">
@@ -35,55 +35,26 @@
 				
 				<div class="week-days-container">
 				    <div class="day-box">
-				        <span class="day-name">Lun</span>
-				        <span class="day-num">9</span>
-				        <div class="dot-indicator done"></div> </div>
-				    <div class="day-box">
-				        <span class="day-name">Mar</span>
-				        <span class="day-num">10</span>
-				        <div class="dot-indicator done"></div>
-				    </div>
-				    <div class="day-box">
-				        <span class="day-name">Mié</span>
-				        <span class="day-num">11</span>
-				        <div class="dot-indicator rest"></div> </div>
-				    <div class="day-box active">
-				        <span class="day-name">Jue</span>
-				        <span class="day-num">12</span>
-				        <div class="dot-indicator pending"></div> </div>
-				    <div class="day-box">
-				        <span class="day-name">Vie</span>
-				        <span class="day-num">13</span>
-				        <div class="dot-indicator"></div>
-				    </div>
-				    <div class="day-box">
-				        <span class="day-name">Sáb</span>
-				        <span class="day-num">14</span>
-				        <div class="dot-indicator"></div>
-				    </div>
-				    <div class="day-box">
-				        <span class="day-name">Dom</span>
-				        <span class="day-num">15</span>
-				        <div class="dot-indicator"></div>
+				    
 				    </div>
 				</div>
 			</div>
 
 			<div class="action-grid-square mt-20">
             
-		        <a href="#" class="card square-card highlight-card">
+		        <a href="ejercicioshoy.php" class="card square-card highlight-card">
 		            <i class="fa-solid fa-bolt square-icon text-blue"></i>
 		            <h4>Entrenar</h4>
 		            <p>Hoy</p>
 		        </a>
 
-		        <a href="#" class="card square-card">
+		        <a href="calendario.php" class="card square-card">
 		            <i class="fa-regular fa-calendar-days square-icon"></i>
 		            <h4>Calendario</h4>
 		            <p>Mensual</p>
 		        </a>
 
-		        <a href="#" class="card square-card">
+		        <a href="rutinas.php" class="card square-card">
 		            <i class="fa-solid fa-list-check square-icon"></i>
 		            <h4>Rutinas</h4>
 		            <p>Gestionar</p>
@@ -98,5 +69,68 @@
 		    <a href="#" class="nav-item"><i class="fa-solid fa-chart-simple"></i><span>Progreso</span></a>
 		    <a href="#" class="nav-item"><i class="fa-solid fa-gear"></i><span>Ajustes</span></a>
 		</nav>
+		<script>
+			document.addEventListener('DOMContentLoaded', () => {
+				// 1. Seleccionamos los contenedores
+				const weekContainer = document.querySelector('.week-days-container');
+				const monthLabel = document.querySelector('.month-label');
+				
+				// 2. Obtenemos la fecha actual
+				const today = new Date();
+				
+				// Arrays para nombres en español
+				const dayNames = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
+				const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
+				// 3. Ponemos el nombre del mes actual en la cabecera
+				monthLabel.textContent = monthNames[today.getMonth()];
+
+				// 4. Calcular la fecha del LUNES de esta semana
+				const currentDay = today.getDay(); // 0 es Domingo, 1 es Lunes...
+				// Si hoy es domingo (0), le restamos 6 días para llegar al lunes pasado. 
+				// Si es otro día, restamos (dia - 1).
+				const distanceToMonday = currentDay === 0 ? 6 : currentDay - 1;
+				
+				const mondayDate = new Date(today);
+				mondayDate.setDate(today.getDate() - distanceToMonday);
+
+				// 5. Generar el HTML para los 7 días
+				let htmlContent = '';
+
+				for (let i = 0; i < 7; i++) {
+				    // Crear una copia de la fecha del lunes y sumar 'i' días
+				    const loopDate = new Date(mondayDate);
+				    loopDate.setDate(mondayDate.getDate() + i);
+
+				    const dayNumber = loopDate.getDate();
+				    const dayNameStr = dayNames[i];
+				    
+				    // Comprobar si 'loopDate' es HOY (comparamos strings para ignorar la hora)
+				    const isToday = loopDate.toDateString() === today.toDateString();
+				    
+				    // Lógica visual para los puntos (Simulación)
+				    let dotClass = '';
+				    if (loopDate < today && !isToday) {
+				        dotClass = 'done'; // Días pasados = Verde
+				    } else if (isToday) {
+				        dotClass = 'pending'; // Hoy = Azul
+				    } else {
+				        dotClass = 'rest'; // Futuro = Gris
+				    }
+
+				    // Construir el HTML
+				    htmlContent += `
+				        <div class="day-box ${isToday ? 'active' : ''}">
+				            <span class="day-name">${dayNameStr}</span>
+				            <span class="day-num">${dayNumber}</span>
+				            <div class="dot-indicator ${dotClass}"></div>
+				        </div>
+				    `;
+				}
+
+				// 6. Insertar el HTML en la página
+				weekContainer.innerHTML = htmlContent;
+			});
+		</script>
 	</body>
 </html>
