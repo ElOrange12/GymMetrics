@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	// Fíjate que en Linux las barras son hacia adelante /
-	require_once __DIR__ . '/bd.php'; // __DIR__ ayuda a evitar problemas de rutas relativas
+	require_once __DIR__ . '../inc/bd.php'; // __DIR__ ayuda a evitar problemas de rutas relativas
 
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$usuario = trim($_POST['usuario']);
@@ -16,7 +16,7 @@
 		    $stmt->execute([$usuario, $email]);
 
 		    if ($stmt->rowCount() > 0) {
-		        header("Location: ../front/registro.php?error=usuario_duplicado");
+		        header("Location: ../registro.php?error=usuario_duplicado");
 		        exit();
 		    }
 
@@ -25,7 +25,7 @@
 		    $stmt = $pdo->prepare("INSERT INTO usuarios (nombre_usuario, email, password) VALUES (?, ?, ?)");
 		    
 		    if ($stmt->execute([$usuario, $email, $passHash])) {
-		        header("Location: ../front/index.php?registro=exito");
+		        header("Location:../index.php?registro=exito");
 		        exit();
 		    }
 		} catch (PDOException $e) {

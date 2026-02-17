@@ -35,7 +35,7 @@
 		<div class="login-container">
 		    <div class="login-box">
 		        <div class="logo-space">
-		            <img src="../img/logo.png" alt="GymMetrics" class="logo" style="max-width: 80px;">
+		            <img src="img/LogoGymMetrics.png" alt="GymMetrics" class="logo" style="max-width: 80px;">
 		        </div>
 		        
 		        <h2>Bienvenido</h2>
@@ -57,15 +57,15 @@
 		            </div>
 		        <?php endif; ?>
 
-		        <form action="../controladores/login_controller.php" method="POST">
+		        <form action="controladores/procesalogin.php" method="POST">
 		            <div class="input-group">
 		                <label for="usuario">Usuario o Email</label>
-		                <input type="text" id="usuario" name="usuario" placeholder="Ej: ElOrange12" required>
+		                <input type="text" id="usuario" name="usuario" required>
 		            </div>
 
 		            <div class="input-group">
 		                <label for="password">Contraseña</label>
-		                <input type="password" id="password" name="password" placeholder="••••••••" required>
+		                <input type="password" id="password" name="password" required>
 		            </div>
 
 		            <button type="submit" class="btn-login">ACCEDER</button>

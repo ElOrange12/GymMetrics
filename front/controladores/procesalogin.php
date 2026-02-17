@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	require_once __DIR__ . '/bd.php';
+	require_once __DIR__ . '../inc/bd.php';
 
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$userEntry = trim($_POST['usuario']);
@@ -16,10 +16,10 @@
 		        $_SESSION['user_name'] = $usuario['nombre_usuario'];
 		        
 		        // Redirección en Linux: asegúrate que exito.php existe y se llama así (minúsculas)
-		        header("Location: ../front/exito.php");
+		        header("Location: ../exito.php");
 		        exit();
 		    } else {
-		        header("Location: ../front/index.php?error=credenciales");
+		        header("Location: ../index.php?error=credenciales");
 		        exit();
 		    }
 		} catch (PDOException $e) {
