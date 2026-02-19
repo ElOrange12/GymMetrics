@@ -87,15 +87,27 @@ CREATE TABLE sets_log (
 
 -- CREAR USUARIO --------------------------------------
 
--- Creamos un usuario llamado 'admin_gym' con contraseña '1234'
-CREATE USER 'admin_gym'@'localhost' IDENTIFIED BY '1234';
+CREATE USER 
+'AdminGym'@'localhost' 
+IDENTIFIED  BY 'AdminGym123$';
 
--- Le damos permisos sobre tu base de datos
-GRANT ALL PRIVILEGES ON gymmetrics.* TO 'admin_gym'@'localhost';
+## LE DAMOS ACCESO AL USUARIO ##
+GRANT USAGE ON *.* TO 'AdminGym'@'localhost';
 
--- Aplicamos cambios y salimos
+## LE SACAMOS LAS RESTRICCIONES ##
+ALTER USER 'AdminGym'@'localhost' 
+REQUIRE NONE 
+WITH MAX_QUERIES_PER_HOUR 0 
+MAX_CONNECTIONS_PER_HOUR 0 
+MAX_UPDATES_PER_HOUR 0 
+MAX_USER_CONNECTIONS 0;
+
+## LE DAMOS ACCESO A LA BD ##
+GRANT ALL PRIVILEGES ON gymmetrics.* 
+TO 'AdminGym'@'localhost';
+
+## RECARGAMOS PRIVILEGIOS ##
 FLUSH PRIVILEGES;
-EXIT;
 
 -- DATOS DE EJEMPLO (SEEDER) --------------------------
 

@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	// Fíjate que en Linux las barras son hacia adelante /
-	require_once __DIR__ . '../inc/bd.php'; // __DIR__ ayuda a evitar problemas de rutas relativas
+	require_once '../inc/bd.php'; 
 
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$usuario = trim($_POST['usuario']);

@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	require_once __DIR__ . '../inc/bd.php';
+	require_once '../inc/bd.php';
 
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$userEntry = trim($_POST['usuario']);

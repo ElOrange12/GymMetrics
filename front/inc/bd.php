@@ -3,8 +3,8 @@
 
 	$host = 'localhost';
 	$dbname = 'gymmetrics';
-	$user = 'admin_gym'; // El usuario que acabamos de crear
-	$pass = '1234';      // La contraseña que le pusiste
+	$user = 'AdminGym'; // El usuario que acabamos de crear
+	$pass = 'AdminGym123$';      // La contraseña que le pusiste
 
 	try {
 		$pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $pass);
