@@ -71,6 +71,8 @@ CREATE TABLE historial_entrenamientos (
     FOREIGN KEY (rutina_id) REFERENCES rutinas(id) ON DELETE SET NULL
 );
 
+USE gymmetrics;
+
 -- 6. LOG DETALLADO (OPCIONAL PERO RECOMENDADO)
 -- Si quieres guardar cuánto peso levantaste en cada serie específica
 CREATE TABLE sets_log (
@@ -84,6 +86,23 @@ CREATE TABLE sets_log (
     FOREIGN KEY (historial_id) REFERENCES historial_entrenamientos(id) ON DELETE CASCADE,
     FOREIGN KEY (ejercicio_id) REFERENCES ejercicios(id) ON DELETE CASCADE
 );
+
+-- 1. Quitamos las columnas viejas de la tabla detalles_rutina
+ALTER TABLE detalles_rutina DROP COLUMN series_objetivo;
+ALTER TABLE detalles_rutina DROP COLUMN reps_objetivo;
+
+-- 2. Creamos la nueva tabla para las series individuales
+CREATE TABLE rutina_series (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    detalle_rutina_id INT NOT NULL, -- Se vincula al ejercicio de la rutina
+    numero_serie INT NOT NULL,      -- Serie 1, Serie 2, Serie 3...
+    reps_objetivo INT NOT NULL,     -- Cuántas reps quieres hacer
+    peso_objetivo DECIMAL(5,2),     -- Con cuánto peso (puede ser 0 si es peso corporal)
+    
+    FOREIGN KEY (detalle_rutina_id) REFERENCES detalles_rutina(id) ON DELETE CASCADE
+);
+
+USE gymmetrics;
 
 -- CREAR USUARIO --------------------------------------
 
@@ -109,28 +128,3 @@ TO 'AdminGym'@'localhost';
 ## RECARGAMOS PRIVILEGIOS ##
 FLUSH PRIVILEGES;
 
--- DATOS DE EJEMPLO (SEEDER) --------------------------
-
--- Insertamos algunos ejercicios básicos
-INSERT INTO ejercicios (nombre, grupo_muscular) VALUES 
-('Press Banca', 'Pecho'), ('Sentadilla', 'Pierna'), ('Peso Muerto', 'Espalda'),
-('Dominadas', 'Espalda'), ('Press Militar', 'Hombro'), ('Curl Bíceps', 'Brazos'),
-('Fondos', 'Pecho/Tríceps');
-
--- Insertamos un usuario de prueba
-INSERT INTO usuarios (nombre_usuario, email, password) VALUES 
-('Daniel', 'daniel@orangebyte.dev', '$2y$10$E7G...'); -- Pass: '1234' (Hash simulado)
-
--- Insertamos Rutinas para Daniel
--- LUNES: Entreno
-INSERT INTO rutinas (usuario_id, dia_semana, es_descanso, nombre_rutina) 
-VALUES (1, 'Lunes', 0, 'Pecho y Tríceps');
-
--- MARTES: Descanso
-INSERT INTO rutinas (usuario_id, dia_semana, es_descanso, nombre_rutina) 
-VALUES (1, 'Martes', 1, 'Descanso Activo');
-
--- Insertamos ejercicios dentro de la rutina del Lunes (ID 1)
-INSERT INTO detalles_rutina (rutina_id, ejercicio_id, series_objetivo, reps_objetivo, orden) VALUES
-(1, 1, 4, '8-10', 1), -- Press Banca
-(1, 7, 3, 'Al fallo', 2); -- Fondos
