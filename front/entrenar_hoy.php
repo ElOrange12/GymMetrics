@@ -108,7 +108,7 @@ try {
         <?php elseif ($rutina_hoy['es_descanso'] == 1): ?>
             <div style="font-size: 60px; color: #95a5a6; margin: 40px 0;"><i class="fa-solid fa-bed"></i></div>
             <h2 style="color: white;">Hoy es día de descanso</h2>
-            <p style="color: var(--text-muted);">¡Recupera fuerzas para mañana!</p>
+            <p style="color: var(--text-muted);">¡Recupera fuerzas para el siguiente día!</p>
 
         <?php elseif ($entreno_completado): ?>
             <div class="completed-badge">

@@ -104,6 +104,12 @@ CREATE TABLE rutina_series (
 
 USE gymmetrics;
 
+-- Añadimos la columna. Si ya la tenías, te dará error (no pasa nada, lo ignoras).
+ALTER TABLE usuarios ADD COLUMN fecha_registro DATE DEFAULT (CURRENT_DATE);
+
+-- Si tenías usuarios antiguos, les ponemos la fecha de hoy para que no haya fallos:
+UPDATE usuarios SET fecha_registro = CURRENT_DATE WHERE fecha_registro IS NULL;
+
 -- CREAR USUARIO --------------------------------------
 
 CREATE USER 

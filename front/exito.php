@@ -19,6 +19,14 @@ $dias_map = [1 => 'Lunes', 2 => 'Martes', 3 => 'Miércoles', 4 => 'Jueves', 5 =>
 $dias_nombres_cortos = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
 
 try {
+    // --- NUEVO: OBTENER DATOS DEL USUARIO (Nombre y Fecha de Registro) ---
+    $stmtUser = $pdo->prepare("SELECT nombre_usuario, fecha_registro FROM usuarios WHERE id = ?");
+    $stmtUser->execute([$user_id]);
+    $userData = $stmtUser->fetch(PDO::FETCH_ASSOC);
+    
+    $nombre_usuario = $userData ? $userData['nombre'] : 'Atleta';
+    $fecha_registro = ($userData && $userData['fecha_registro']) ? $userData['fecha_registro'] : $hoy;
+
     // 2. OBTENER RUTINAS
     $stmtRutinas = $pdo->prepare("SELECT dia_semana, es_descanso FROM rutinas WHERE usuario_id = ?");
     $stmtRutinas->execute([$user_id]);
@@ -27,7 +35,7 @@ try {
         $rutinas[$r['dia_semana']] = $r['es_descanso'];
     }
 
-    // 3. OBTENER HISTORIAL (Nos aseguramos de coger solo la fecha limpia)
+    // 3. OBTENER HISTORIAL
     $stmtHistorial = $pdo->prepare("SELECT DATE(fecha) FROM historial_entrenamientos WHERE usuario_id = ? AND fecha >= ? AND fecha <= ? AND completado = 1");
     $stmtHistorial->execute([$user_id, $lunes_str, $domingo_str]);
     $completados = $stmtHistorial->fetchAll(PDO::FETCH_COLUMN);
@@ -38,9 +46,13 @@ try {
         $fecha_iter = date('Y-m-d', strtotime("$lunes_str +$i days"));
         $nombre_dia_bd = $dias_map[$i + 1];
         
-        $status = 'none'; // Vacío
+        $status = 'none'; // Vacío por defecto
         
-        if (isset($rutinas[$nombre_dia_bd])) {
+        // --- AQUÍ ESTÁ TU REGLA APLICADA A LA SEMANA ---
+        if ($fecha_iter < $fecha_registro) {
+            $status = 'none'; // Si el día es anterior al registro, se queda en blanco
+        } elseif (isset($rutinas[$nombre_dia_bd])) {
+            // Si ya estaba registrado, aplicamos colores normales
             if ($rutinas[$nombre_dia_bd] == 1) {
                 $status = 'rest'; // Gris (Descanso)
             } else {
@@ -84,7 +96,7 @@ try {
         .dot-indicator.pending { background-color: #3498db; } /* Azul - Pendiente */
         .dot-indicator.done { background-color: #2ecc71; } /* Verde - Realizado */
         .dot-indicator.missed { background-color: #e74c3c; } /* Rojo - Perdido */
-        .dot-indicator.none { background-color: transparent; } /* Sin rutina */
+        .dot-indicator.none { background-color: transparent; } /* Sin rutina o pre-registro */
     </style>
 </head>
 <body>
@@ -93,16 +105,22 @@ try {
         <div class="nav-brand">
             <i class="fa-solid fa-dumbbell brand-icon"></i> GymMetrics
         </div>
-        <div class="nav-profile">
-            <span class="username">Atleta</span>
-            <div class="avatar"><i class="fa-solid fa-user"></i></div>
+        
+        <div class="nav-profile" style="display: flex; align-items: center; gap: 15px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span class="username"><?= htmlspecialchars($nombre_usuario) ?></span>
+                <div class="avatar"><i class="fa-solid fa-user"></i></div>
+            </div>
+            <a href="controladores/logout.php" style="color: #e74c3c; font-size: 20px; text-decoration: none; padding: 5px; transition: 0.3s;" title="Cerrar sesión">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </a>
         </div>
     </nav>
 
     <main class="container">
         
         <header class="dashboard-header">
-            <h2>Bienvenido, <span class="text-blue">Daniel</span></h2>
+            <h2>Bienvenido, <span class="text-blue"><?= htmlspecialchars($nombre_usuario) ?></span></h2>
             <p class="subtitle">¡¡Echa un vistazo a tu progreso!!</p>
         </header>
 
@@ -149,11 +167,10 @@ try {
             const weekContainer = document.querySelector('.week-days-container');
             const monthLabel = document.querySelector('.month-label');
             
-            // Ponemos el mes actual en texto
             const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
             monthLabel.textContent = monthNames[new Date().getMonth()];
 
-            // 1. RECIBIMOS LOS DATOS EXACTOS DE PHP
+            // 1. RECIBIMOS LOS DATOS EXACTOS DE PHP (Ya con la regla de registro aplicada)
             const semanaData = <?= json_encode($semana_data) ?>;
             
             // 2. CONSTRUIMOS EL HTML ITERANDO LOS DATOS DE PHP
