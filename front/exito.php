@@ -19,13 +19,22 @@ $dias_map = [1 => 'Lunes', 2 => 'Martes', 3 => 'Miércoles', 4 => 'Jueves', 5 =>
 $dias_nombres_cortos = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
 
 try {
-    // --- NUEVO: OBTENER DATOS DEL USUARIO (Nombre y Fecha de Registro) ---
-    $stmtUser = $pdo->prepare("SELECT nombre_usuario, fecha_registro FROM usuarios WHERE id = ?");
+    // --- OBTENER DATOS DEL USUARIO ---
+    $stmtUser = $pdo->prepare("SELECT * FROM usuarios WHERE id = ?");
     $stmtUser->execute([$user_id]);
     $userData = $stmtUser->fetch(PDO::FETCH_ASSOC);
     
-    $nombre_usuario = $userData ? $userData['nombre'] : 'Atleta';
-    $fecha_registro = ($userData && $userData['fecha_registro']) ? $userData['fecha_registro'] : $hoy;
+    // Sacamos el nombre limpiando espacios extra
+    $nombre_limpio = isset($userData['nombre_usuario']) ? trim($userData['nombre_usuario']) : '';
+
+    // Si está vacío, forzamos que diga "Atleta"
+    if ($nombre_limpio === '') {
+        $nombre_usuario = 'Atleta';
+    } else {
+        $nombre_usuario = $nombre_limpio;
+    }
+
+    $fecha_registro = (!empty($userData['fecha_registro'])) ? $userData['fecha_registro'] : $hoy;
 
     // 2. OBTENER RUTINAS
     $stmtRutinas = $pdo->prepare("SELECT dia_semana, es_descanso FROM rutinas WHERE usuario_id = ?");
@@ -48,25 +57,22 @@ try {
         
         $status = 'none'; // Vacío por defecto
         
-        // --- AQUÍ ESTÁ TU REGLA APLICADA A LA SEMANA ---
         if ($fecha_iter < $fecha_registro) {
-            $status = 'none'; // Si el día es anterior al registro, se queda en blanco
+            $status = 'none'; 
         } elseif (isset($rutinas[$nombre_dia_bd])) {
-            // Si ya estaba registrado, aplicamos colores normales
             if ($rutinas[$nombre_dia_bd] == 1) {
-                $status = 'rest'; // Gris (Descanso)
+                $status = 'rest'; 
             } else {
                 if (in_array($fecha_iter, $completados)) {
-                    $status = 'done'; // Verde (Hecho)
+                    $status = 'done'; 
                 } elseif ($fecha_iter < $hoy) {
-                    $status = 'missed'; // Rojo (No hecho)
+                    $status = 'missed'; 
                 } else {
-                    $status = 'pending'; // Azul (Pendiente)
+                    $status = 'pending'; 
                 }
             }
         }
 
-        // Guardamos todo en un array que JS pueda leer fácilmente
         $semana_data[] = [
             'nombre_corto' => $dias_nombres_cortos[$i],
             'dia_numero' => date('j', strtotime($fecha_iter)),
@@ -108,7 +114,7 @@ try {
         
         <div class="nav-profile" style="display: flex; align-items: center; gap: 15px;">
             <div style="display: flex; align-items: center; gap: 8px;">
-                <span class="username"><?= htmlspecialchars($nombre_usuario) ?></span>
+                <span class="username"><?php echo htmlspecialchars($nombre_usuario); ?></span>
                 <div class="avatar"><i class="fa-solid fa-user"></i></div>
             </div>
             <a href="controladores/logout.php" style="color: #e74c3c; font-size: 20px; text-decoration: none; padding: 5px; transition: 0.3s;" title="Cerrar sesión">
@@ -120,7 +126,7 @@ try {
     <main class="container">
         
         <header class="dashboard-header">
-            <h2>Bienvenido, <span class="text-blue"><?= htmlspecialchars($nombre_usuario) ?></span></h2>
+            <h2>Bienvenido, <span class="text-blue"><?php echo htmlspecialchars($nombre_usuario); ?></span></h2>
             <p class="subtitle">¡¡Echa un vistazo a tu progreso!!</p>
         </header>
 
@@ -131,7 +137,7 @@ try {
             </div>
             
             <div class="week-days-container">
-                </div>
+            </div>
         </div>
 
         <div class="action-grid-square mt-20">
@@ -157,7 +163,6 @@ try {
 
     <nav class="bottom-nav">
         <a href="#" class="nav-item active"><i class="fa-solid fa-house"></i><span>Inicio</span></a>
-        <a href="rutinas.php" class="nav-item"><i class="fa-solid fa-book-journal-whills"></i><span>Rutinas</span></a>
         <a href="#" class="nav-item"><i class="fa-solid fa-chart-simple"></i><span>Progreso</span></a>
         <a href="#" class="nav-item"><i class="fa-solid fa-gear"></i><span>Ajustes</span></a>
     </nav>
@@ -170,10 +175,8 @@ try {
             const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
             monthLabel.textContent = monthNames[new Date().getMonth()];
 
-            // 1. RECIBIMOS LOS DATOS EXACTOS DE PHP (Ya con la regla de registro aplicada)
-            const semanaData = <?= json_encode($semana_data) ?>;
+            const semanaData = <?php echo json_encode($semana_data); ?>;
             
-            // 2. CONSTRUIMOS EL HTML ITERANDO LOS DATOS DE PHP
             let htmlContent = '';
             
             semanaData.forEach(day => {
@@ -186,7 +189,6 @@ try {
                 `;
             });
 
-            // 3. INYECTAMOS EN LA VISTA
             weekContainer.innerHTML = htmlContent;
         });
     </script>

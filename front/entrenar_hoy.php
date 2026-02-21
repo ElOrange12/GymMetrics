@@ -90,6 +90,69 @@ try {
         .comments-box { width: 100%; background: #0f141a; border: 1px solid #34495e; color: white; border-radius: 8px; padding: 10px; margin-top: 20px; resize: vertical; min-height: 80px; font-family: 'Roboto', sans-serif;}
         .btn-finish { background: var(--green-success); color: white; border: none; padding: 15px; width: 100%; font-size: 18px; font-weight: bold; border-radius: 8px; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 15px rgba(39, 174, 96, 0.4); }
         .completed-badge { background: rgba(39, 174, 96, 0.1); border: 1px solid #2ecc71; padding: 20px; border-radius: 12px; margin-top: 20px; font-size: 16px; }
+        
+        /* PANEL DEL TEMPORIZADOR CALCADO A TU DISEÑO */
+        .rest-timer-box { 
+            background: #0d141b; /* Fondo azul muy oscuro */
+            border: 2px solid #1f5b8b; /* Borde azul vibrante */
+            border-radius: 12px; 
+            padding: 25px 20px; 
+            margin-bottom: 25px; 
+            text-align: center;
+        }
+        
+        .rest-timer-box .title {
+            color: #7f8c8d;
+            font-size: 13px;
+            letter-spacing: 1.5px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .rest-display { 
+            font-size: 65px; 
+            font-weight: bold; 
+            color: #2ea1f8; /* Azul eléctrico de los números */
+            font-family: monospace; 
+            line-height: 1.2; 
+            margin-bottom: 15px;
+        }
+
+        .rest-controls { margin-bottom: 20px; }
+        .rest-controls button { 
+            background: transparent; 
+            border: 1px solid #1f5b8b; 
+            color: white; 
+            padding: 8px 18px; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            margin: 0 4px; 
+            font-size: 14px; 
+        }
+
+        .rest-actions { display: flex; justify-content: center; gap: 10px; }
+        
+        #btnPlayRest {
+            background: #0bd161; /* Verde brillante */
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 140px;
+        }
+
+        .btn-reset-red {
+            background: #f03a47; /* Rojo intenso */
+            color: white;
+            border: none;
+            width: 45px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
@@ -133,7 +196,7 @@ try {
             <h3 style="color: white; margin-top: 0; margin-bottom: 20px;"><?= htmlspecialchars($rutina_hoy['nombre_rutina']) ?></h3>
             
             <div class="rest-timer-box" id="restTimerBox">
-                <div style="color: var(--text-muted); font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Descanso entre series</div>
+                <div class="title">Descanso entre series</div>
                 
                 <div class="timer-display-row">
                     <button type="button" class="btn-adjust-time" onclick="adjustRestTime(-15)">-15</button>
@@ -141,17 +204,17 @@ try {
                     <button type="button" class="btn-adjust-time" onclick="adjustRestTime(15)">+15</button>
                 </div>
 
-                <div class="rest-controls" style="margin-bottom: 20px;">
+                <div class="rest-controls">
                     <button type="button" onclick="presetRest(120)">2:00</button>
                     <button type="button" onclick="presetRest(180)">3:00</button>
                     <button type="button" onclick="presetRest(300)">5:00</button>
                 </div>
 
-                <div class="rest-actions" style="display: flex; justify-content: center;">
-                    <button type="button" id="btnPlayRest" onclick="togglePlayRest()" style="background: var(--green-success); width: 170px;">
+                <div class="rest-actions">
+                    <button type="button" id="btnPlayRest" onclick="togglePlayRest()">
                         <i class="fa-solid fa-play"></i> INICIAR
                     </button>
-                    <button type="button" onclick="resetRestTimer()" style="background: #e74c3c; width: 60px;">
+                    <button type="button" class="btn-reset-red" onclick="resetRestTimer()">
                         <i class="fa-solid fa-rotate-right"></i>
                     </button>
                 </div>
