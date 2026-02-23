@@ -113,10 +113,11 @@ try {
         </div>
         
         <div class="nav-profile" style="display: flex; align-items: center; gap: 15px;">
-            <div style="display: flex; align-items: center; gap: 8px;">
+            <a href="perfil.php" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: inherit; transition: 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
                 <span class="username"><?php echo htmlspecialchars($nombre_usuario); ?></span>
                 <div class="avatar"><i class="fa-solid fa-user"></i></div>
-            </div>
+            </a>
+            
             <a href="controladores/logout.php" style="color: #e74c3c; font-size: 20px; text-decoration: none; padding: 5px; transition: 0.3s;" title="Cerrar sesión">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
             </a>
