@@ -71,7 +71,7 @@
 		            <button type="submit" class="btn-login">ACCEDER</button>
 		            
 		            <div class="form-footer">
-		                <a href="#">¿Olvidaste tu contraseña?</a>
+		                <!-- <a href="#">¿Olvidaste tu contraseña?</a> -->
 		                <hr>
 		                <p>¿No tienes cuenta? <a href="registro.php" class="highlight">Regístrate aquí</a></p>
 		            </div>
