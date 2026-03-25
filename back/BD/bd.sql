@@ -45,8 +45,6 @@ CREATE TABLE detalles_rutina (
     id INT AUTO_INCREMENT PRIMARY KEY,
     rutina_id INT NOT NULL,
     ejercicio_id INT NOT NULL,
-    series_objetivo INT DEFAULT 4,
-    reps_objetivo VARCHAR(20) DEFAULT 12,
     orden INT DEFAULT 0, -- Para ordenar los ejercicios (1º, 2º, 3º...)
     
     FOREIGN KEY (rutina_id) REFERENCES rutinas(id) ON DELETE CASCADE,
