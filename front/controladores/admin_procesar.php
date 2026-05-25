@@ -31,12 +31,13 @@ try {
     }
 
     if ($accion === 'nuevo_ejercicio') {
-        $nombre = trim($_POST['nombre_ejercicio']);
-        $grupo = trim($_POST['grupo_muscular']);
-        
+        $nombre    = trim($_POST['nombre_ejercicio'] ?? '');
+        $nombre_en = trim($_POST['nombre_ejercicio_en'] ?? '') ?: null;
+        $grupo     = trim($_POST['grupo_muscular'] ?? '');
+
         if (!empty($nombre)) {
-            $stmt = $pdo->prepare("INSERT INTO ejercicios (nombre, grupo_muscular) VALUES (?, ?)");
-            $stmt->execute([$nombre, $grupo]);
+            $stmt = $pdo->prepare("INSERT INTO ejercicios (nombre, nombre_en, grupo_muscular) VALUES (?, ?, ?)");
+            $stmt->execute([$nombre, $nombre_en, $grupo]);
         }
         header("Location: ../admin.php?msg=ej_added");
         exit();

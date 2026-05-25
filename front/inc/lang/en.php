@@ -48,6 +48,33 @@
 		'day_of_week' => 'Day of the week',
 		'is_rest_day' => 'Is it a rest day?',
 		'add_exercise' => 'Add Exercise',
+		'week' => 'WEEK',
+		'configure_day' => 'Configure',
+		'mark_rest_day' => 'Mark as Rest Day',
+		'save_routine' => 'SAVE CHANGES',
+		'select_exercise' => 'Select an exercise...',
+		'add_series' => 'Add Set',
+		'delete_rest_confirm' => 'Delete rest day?',
+		'delete_routine_confirm' => 'Are you sure you want to delete this routine?',
+		'training_label' => 'Workout',
+		'day_assigned' => 'Assigned Day',
+
+		// Días de la semana
+		'day_monday'    => 'Monday',
+		'day_tuesday'   => 'Tuesday',
+		'day_wednesday' => 'Wednesday',
+		'day_thursday'  => 'Thursday',
+		'day_friday'    => 'Friday',
+		'day_saturday'  => 'Saturday',
+		'day_sunday'    => 'Sunday',
+
+		// Grupos musculares
+		'muscle_chest'     => 'Chest',
+		'muscle_back'      => 'Back',
+		'muscle_legs'      => 'Legs',
+		'muscle_shoulders' => 'Shoulders',
+		'muscle_arms'      => 'Arms',
+		'muscle_core'      => 'Core',
 
 		// Entrenar Hoy (entrenar_hoy.php)
 		'training_today' => 'TRAINING',
@@ -56,9 +83,48 @@
 		'pause_timer' => 'PAUSE',
 		'stop_alarm' => 'STOP',
 		'finish_training' => 'FINISH WORKOUT',
-		'how_you_felt' => 'How did you feel today?',
+		'how_you_felt' => 'How did you feel today? E.g: New PR, felt discomfort in shoulder...',
 		'workout_completed' => 'Workout Completed!',
 		'total_time' => 'Total time',
+		'no_routine_configured' => "You haven't set up your routine for",
+		'go_to_routines' => 'Go to My Routines',
+		'rest_day_message' => 'Today is a rest day',
+		'rest_day_submsg' => 'Recover your strength for the next session!',
+		'minutes' => 'minutes',
+		'reps' => 'reps',
+
+		// Editar Rutina (editar_rutina.php)
+		'edit_structure' => 'EDIT STRUCTURE',
+		'save_structure' => 'SAVE STRUCTURE',
+		'routine_name_label' => 'Routine Name',
+
+		// Actualizar Pesos (actualizar_pesos.php)
+		'update_weights' => 'UPDATE WEIGHTS',
+		'save_weights' => 'SAVE NEW WEIGHTS',
+
+		// Admin (admin.php)
+		'admin_panel' => 'Control Panel',
+		'admin_subtitle' => 'System data management.',
+		'admin_users' => 'Users',
+		'admin_back' => 'Back to GymMetrics',
+		'admin_completed_workouts' => 'COMPLETED WORKOUTS',
+		'admin_exercises_db' => 'EXERCISES IN DB',
+		'admin_users_management' => 'User Management',
+		'admin_exercise_catalog' => 'Exercise Catalog',
+		'admin_new_exercise_es' => 'Name ES...',
+		'admin_new_exercise_en' => 'Name EN (optional)...',
+		'admin_add' => 'Add',
+		'admin_col_id' => 'ID',
+		'admin_col_name' => 'Name',
+		'admin_col_name_en' => 'Name (EN)',
+		'admin_col_group' => 'Group',
+		'admin_col_user' => 'User',
+		'admin_col_email' => 'Email',
+		'admin_col_role' => 'Role',
+		'admin_col_action' => 'Action',
+		'admin_delete_user_confirm' => 'Delete user and ALL their history?',
+		'admin_delete_exercise_confirm' => 'Are you sure? If someone has it in their routine, it will be deleted in cascade.',
+		'admin_users_label' => 'USERS',
 
 		// Perfil (perfil.php)
 		'my_profile' => 'MY PROFILE',
